@@ -29,3 +29,13 @@
  <p align="center">
     <b>Clique na imagem para usar a aplicação</b>
   </p>
+  
+## Back-end 🖥️
+Veja o backend da aplicação: <a href="https://github.com/chrishenderson07/Rocket-Movies-API">Veja aqui</a> 
+
+## Autor 
+ <p>Feito com ❤️ por Christopher Henderson 👋🏽 Entre em contato!</p>
+
+[![Linkedin Badge](https://img.shields.io/badge/-Christopher-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/https://www.linkedin.com/in/christopher-henderson-633495241)](https://www.linkedin.com/in/christopher-henderson-633495241) 
+[![Instagram Badge](https://img.shields.io/badge/-douglasantosdev@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:douglasantosdev@gmail.com)](mailto:douglasantosdev@gmail.com)
+
