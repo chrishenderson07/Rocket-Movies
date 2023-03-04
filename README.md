@@ -12,10 +12,20 @@
 - [x] Cadastro da nota com classificação, categorias, titulo e opniões
 - [x] Responsividade
 
+## Stacks Utilizadas ⚙️
+- React
+- Styled Components
+- Axios
+- Cors
+- JavasSript
+- NodeJs
+- Vite
+
 ## Apresentação 🎨
-<a href="https://rocket-movies-theta.vercel.app/">
+<a style="text-decoration:none;" href="https://rocket-movies-theta.vercel.app/">
   <img src="./src/assets/img-principal.png"/>
-  <p align="center">
-  Clique na imagem para usar a aplicação
-  </p>
 </a>
+
+ <p align="center">
+    <b>Clique na imagem para usar a aplicação</b>
+  </p>
