@@ -1,33 +1,59 @@
-import { Link } from 'react-router-dom'
+import { createContext, useContext } from "react";
+import { useState } from "react";
+import { AuthProvider, useAuth } from "../../hooks/auth";
 
-import { Container, Form, Background } from './styles'
-import { FiMail, FiLock, FiArrowLeft } from 'react-icons/fi'
-import { Input } from '../../components/Input'
-import { Button } from '../../components/Button'
-import { ButtonText } from '../../components/ButtonText'
+import { Link } from "react-router-dom";
+
+import { Container, Form, Background } from "./styles";
+import { FiMail, FiLock, FiArrowLeft } from "react-icons/fi";
+import { Input } from "../../components/Input";
+import { Button } from "../../components/Button";
+import { ButtonText } from "../../components/ButtonText";
 
 export function SignIn() {
-	return (
-		<Container>
-			<Form>
-				<h1>RocketMovies</h1>
-				<p>Aplicação para acompanhar tudo que assistir.</p>
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-				<h2>Faça seu login</h2>
+  const { signIn } = useAuth();
 
-				<Input type="text" placeholder="E-mail" icon={FiMail} />
+  function handleSignIn() {
+    signIn({ email, password });
+  }
 
-				<Input type="text" placeholder="Senha" icon={FiLock} />
+  return (
+    <Container>
+      <Form>
+        <h1>RocketMovies</h1>
+        <p>Aplicação para acompanhar tudo que assistir.</p>
 
-				<div className="buttons">
-					<Button title="Entrar" />
-					<Link to="/register">
-						<ButtonText title="Criar Conta" />
-					</Link>
-				</div>
-			</Form>
+        <h2>Faça seu login</h2>
 
-			<Background />
-		</Container>
-	)
+        <Input
+          type="text"
+          placeholder="E-mail"
+          icon={FiMail}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <Input
+          type="password"
+          placeholder="Senha"
+          icon={FiLock}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <div className="buttons">
+          <Button
+            title="Entrar"
+            onClick={handleSignIn}
+          />
+          <Link to="/register">
+            <ButtonText title="Criar Conta" />
+          </Link>
+        </div>
+      </Form>
+
+      <Background />
+    </Container>
+  );
 }

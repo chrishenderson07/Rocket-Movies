@@ -1,42 +1,122 @@
-import { Link } from 'react-router-dom'
-import { FiArrowLeft, FiUser, FiMail, FiLock, FiCamera } from 'react-icons/fi'
-import { Container, Form, Avatar } from './styles'
-import { Input } from '../../components/Input'
-import { Button } from '../../components/Button'
-import { ButtonText } from '../../components/ButtonText'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiArrowLeft, FiUser, FiMail, FiLock, FiCamera } from "react-icons/fi";
+
+import { api } from "../../services/api";
+import avatarPlaceholder from "../../assets/avatar-placeholder.svg";
+
+import { useAuth } from "../../hooks/auth";
+
+import { Container, Form, Avatar } from "./styles";
+import { Input } from "../../components/Input";
+import { Button } from "../../components/Button";
+import { ButtonText } from "../../components/ButtonText";
 
 export function Profile() {
-	return (
-		<Container>
-			<header>
-				<Link to="/">
-					<ButtonText title="Voltar" icon={FiArrowLeft} />
-				</Link>
-			</header>
+  const navigate = useNavigate();
+  function handlePageNavigate(locale) {
+    navigate(locale);
+  }
 
-			<Form>
-				<Avatar>
-					<img
-						src="https://github.com/chrishenderson07.png"
-						alt="Foto do usuário"
-					/>
+  const { user, updateProfile } = useAuth();
 
-					<label htmlFor="avatar">
-						<FiCamera />
-						<input type="file" id="avatar" />
-					</label>
-				</Avatar>
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
 
-				<Input placeholder="Nome" type="text" icon={FiUser} />
+  const avatarUrl = user.avatar
+    ? `${api.defaults.baseURL}/files/${user.avatar}`
+    : avatarPlaceholder;
 
-				<Input placeholder="Email" type="mail" icon={FiMail} />
+  const [avatar, setAvatar] = useState(avatarUrl);
+  const [avatarFile, setAvatarFile] = useState(null);
 
-				<Input placeholder="Senha Atual" type="password" icon={FiLock} />
+  async function handleUpdate() {
+    const updated = {
+      name,
+      email,
+      password,
+      old_password: oldPassword,
+    };
 
-				<Input placeholder="Senha Antiga" type="password" icon={FiLock} />
+    const userUpdated = Object.assign(user, updated);
 
-				<Button title="Salvar" />
-			</Form>
-		</Container>
-	)
+    await updateProfile({ user: userUpdated, avatarFile });
+  }
+
+  function handleChangeAvatar(event) {
+    const file = event.target.files[0];
+    setAvatarFile(file);
+
+    const imagePreview = URL.createObjectURL(file);
+    setAvatar(imagePreview);
+  }
+
+  return (
+    <Container>
+      <header>
+        <ButtonText
+          title="Voltar"
+          icon={FiArrowLeft}
+          onClick={() => {
+            handlePageNavigate(-1);
+          }}
+        />
+      </header>
+
+      <Form>
+        <Avatar>
+          <img
+            src={avatar}
+            alt={`Foto do usuário ${user.name}`}
+          />
+
+          <label htmlFor="avatar">
+            <FiCamera />
+            <input
+              type="file"
+              id="avatar"
+              onChange={handleChangeAvatar}
+            />
+          </label>
+        </Avatar>
+
+        <Input
+          placeholder="Nome"
+          type="text"
+          icon={FiUser}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <Input
+          placeholder="Email"
+          type="mail"
+          icon={FiMail}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <Input
+          placeholder="Senha Atual"
+          type="password"
+          icon={FiLock}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <Input
+          placeholder="Senha Antiga"
+          type="password"
+          icon={FiLock}
+          onChange={(e) => setOldPassword(e.target.value)}
+        />
+
+        <Button
+          title="Salvar"
+          onClick={handleUpdate}
+        />
+      </Form>
+    </Container>
+  );
 }

@@ -1,31 +1,69 @@
-import { Link } from 'react-router-dom'
-import { Input } from '../Input'
-import { Container } from './styles'
+import { useAuth } from "../../hooks/auth";
 
-export function Header() {
-	return (
-		<Container>
-			<Link to="/">
-				<h1>RocketMovies</h1>
-			</Link>
-			<div className="search">
-				<Input placeholder="Pesquisar pelo titulo" />
-			</div>
+import { api } from "../../services/api";
+import avatarPlaceholder from "../../assets/avatar-placeholder.svg";
 
-			<div>
-				<div className="info">
-					<Link to="/profile">
-						<h3>Chris Henderson</h3>
-					</Link>
-					<Link to="/signin">sair</Link>
-				</div>
-				<Link to="/profile">
-					<img
-						src="https://github.com/chrishenderson07.png"
-						alt="Foto do usuário"
-					/>
-				</Link>
-			</div>
-		</Container>
-	)
+import { useNavigate } from "react-router-dom";
+import { Input } from "../Input";
+import { Container } from "./styles";
+
+export function Header({ onChange, isSearch }) {
+  const { signOut, user } = useAuth();
+
+  const avatarUrl = user.avatar
+    ? `${api.defaults.baseURL}/files/${user.avatar}`
+    : avatarPlaceholder;
+
+  const navigate = useNavigate();
+  function handlePageNavigate(locale) {
+    navigate(locale);
+  }
+
+  function handleSignOut() {
+    navigate("/");
+    signOut();
+  }
+
+  return (
+    <Container>
+      <h1
+        onClick={() => {
+          handlePageNavigate("/");
+        }}
+      >
+        RocketMovies
+      </h1>
+
+      {isSearch ? (
+        <div className="search">
+          <Input
+            placeholder="Pesquisar pelo titulo"
+            onChange={onChange}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
+
+      <div>
+        <div className="info">
+          <h3
+            onClick={() => {
+              handlePageNavigate("/profile");
+            }}
+          >
+            {user.name}
+          </h3>
+          <button onClick={handleSignOut}>sair</button>
+        </div>
+        <img
+          src={avatarUrl}
+          alt={`Foto do usuario ${user.name}`}
+          onClick={() => {
+            handlePageNavigate("/profile");
+          }}
+        />
+      </div>
+    </Container>
+  );
 }
