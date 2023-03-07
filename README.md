@@ -22,12 +22,13 @@
 - Vite
 
 ## Apresentação 🎨
-<a style="text-decoration:none;" href="https://rocket-movies-theta.vercel.app/">
+<a style="text-decoration:none;" href="https://the-rocket-movies.netlify.app/">
   <img src="./src/assets/img-principal.png"/>
 </a>
 
  <p align="center">
-    <b>Clique na imagem para usar a aplicação</b>
+    <b>Clique na imagem para usar a aplicação</b><br>
+     <a href="https://the-rocket-movies.netlify.app/" rel="nofollow"><img src="https://camo.githubusercontent.com/ee1379595b3e25d22076a734855a3a10d2c1f886b5b19b788eabc72685ffcfa3/68747470733a2f2f6170692e6e65746c6966792e636f6d2f6170692f76312f6261646765732f64623835343537622d333431642d343536332d383961302d6562396231396164343765392f6465706c6f792d737461747573" alt="Veja a aplicação" data-canonical-src="https://api.netlify.com/api/v1/badges/db85457b-341d-4563-89a0-eb9b19ad47e9/deploy-status" style="max-width: 100%;"></a>
   </p>
   
 ## Back-end 🖥️
